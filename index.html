@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#080d14" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23080d14'/%3E%3Cpath d='M16 48L30 16H34L48 48H40L32 28L24 48Z' fill='%2300f3ff'/%3E%3C/svg%3E" />
+  <title>AEGIS-X01 · Tactical Android</title>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <div class="brand-mark" aria-hidden="true">A</div>
+      <div><span class="eyebrow">ADVANCED TACTICAL ANDROID</span><h1>AEGIS<span>—</span>X01</h1></div>
+      <span class="online"><i></i> OFFLINE READY</span>
+    </header>
+    <section id="viewport" aria-label="Interactive 3D android viewer">
+      <div class="corner top-left"></div><div class="corner bottom-right"></div>
+      <div class="model-label"><span class="eyebrow">UNIT / 001</span><p>CERAMIC EXOSKELETON</p></div>
+      <div class="scene-meta"><span id="status" role="status">Initializing renderer…</span><span id="fps">— FPS</span></div>
+      <div class="gesture">DRAG TO ORBIT <span>·</span> PINCH TO ZOOM</div>
+    </section>
+    <section class="toolbar" aria-label="Viewer controls">
+      <button id="rotate" aria-pressed="true"><span aria-hidden="true">↻</span> Auto orbit</button>
+      <button id="reset"><span aria-hidden="true">⌖</span> Reset view</button>
+      <button id="settings" aria-expanded="false" aria-controls="settings-panel"><span aria-hidden="true">☷</span> Lighting</button>
+      <button id="import"><span aria-hidden="true">＋</span> Import GLB</button>
+      <input id="glb-file" type="file" accept=".glb,model/gltf-binary" hidden />
+    </section>
+    <section id="settings-panel" class="panel" hidden aria-label="Lighting settings">
+      <label for="exposure">Exposure <output id="exposure-value">1.0</output></label>
+      <input id="exposure" type="range" min="0.4" max="1.8" step="0.1" value="1" />
+      <label for="bloom">Neon bloom <output id="bloom-value">0.5</output></label>
+      <input id="bloom" type="range" min="0" max="1.2" step="0.1" value="0.5" />
+      <button id="default-model">Restore procedural android</button>
+    </section>
+    <footer><span>WHITE CERAMIC / DARK TITANIUM</span><span>CYAN <i class="swatch cyan"></i> AMBER <i class="swatch amber"></i></span></footer>
+    <p id="notice" role="alert" hidden></p>
+  </main>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

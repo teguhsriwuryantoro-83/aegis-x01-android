@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.gradle/
+**/build/
+local.properties
+*.jks
+*.keystore
+playwright-output/
+.DS_Store
