@@ -1,0 +1,41 @@
+name: Build MAZTEGE Phone Security APK
+on:
+  push:
+    paths:
+      - 'maztege-phone-security/**'
+      - '.github/workflows/maztege-phone-security.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Install Android SDK 35
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - name: Build debug APK
+        working-directory: maztege-phone-security
+        run: gradle --no-daemon :app:assembleDebug :app:lintDebug
+      - name: Verify APK and calculate checksum
+        run: |
+          APK="maztege-phone-security/app/build/outputs/apk/debug/app-debug.apk"
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
+          mkdir -p artifacts
+          cp "$APK" artifacts/MAZTEGE-PHONE-SECURITY.apk
+          cd artifacts
+          sha256sum MAZTEGE-PHONE-SECURITY.apk > MAZTEGE-PHONE-SECURITY.apk.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MAZTEGE-PHONE-SECURITY-APK
+          path: artifacts/
+          retention-days: 90
