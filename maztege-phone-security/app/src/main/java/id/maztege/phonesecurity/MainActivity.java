@@ -135,6 +135,15 @@ public class MainActivity extends Activity {
             boolean vpn = caps!=null && caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN);
             addFinding("Koneksi VPN", vpn?"VPN sedang aktif. Periksa nama penyedia dan apakah Anda mengaktifkannya.":"Tidak terdeteksi koneksi VPN aktif saat pemindaian.", vpn);
 
+            KeyguardManager km = (KeyguardManager)getSystemService(KEYGUARD_SERVICE);
+            boolean secureLock = km != null && km.isDeviceSecure();
+            addFinding("Kunci layar", secureLock ? "PIN, pola, atau sandi layar terdeteksi aktif." : "Tidak terdeteksi PIN, pola, atau sandi layar. Aktifkan kunci layar yang kuat.", !secureLock);
+
+            boolean adb = Settings.Global.getInt(getContentResolver(), Settings.Global.ADB_ENABLED, 0) == 1;
+            boolean dev = Settings.Global.getInt(getContentResolver(), Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1;
+            addFinding("USB debugging", adb ? "USB debugging aktif. Matikan jika tidak sedang digunakan." : "USB debugging tidak aktif.", adb);
+            addFinding("Opsi pengembang", dev ? "Opsi pengembang aktif. Periksa pengaturan yang Anda ubah." : "Opsi pengembang tidak aktif.", false);
+
             addFinding("Versi Android & patch", "Android "+Build.VERSION.RELEASE+" (API "+Build.VERSION.SDK_INT+") • Patch keamanan: "+Build.VERSION.SECURITY_PATCH, false);
             addFinding("Inventaris aplikasi", reviewed+" paket terpasang diperiksa. "+flagged+" temuan perlu ditinjau.", false);
 
